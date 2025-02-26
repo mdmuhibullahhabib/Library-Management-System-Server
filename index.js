@@ -64,6 +64,25 @@ async function run() {
     })
 
 
+         // Update Book
+        app.put('/book/:id', async (req, res) => {
+          const id = req.params.id
+          const query = { _id: new ObjectId(id) }
+          const options = { upsert: true }
+          const updatedBook = req.body
+          const book = {
+            $set: {
+              image: updatedBook.image,
+              bookName: updatedBook.bookName,
+              category: updatedBook.category,
+              rating: updatedBook.rating,
+              authorName: updatedBook.authorName,
+            }
+          }
+            const result = await booksCollection.updateOne(query, book, options)
+            res.send(result);
+      console.log(result)
+      })
 
 
     // post add book
