@@ -81,6 +81,21 @@ async function run() {
           }
             const result = await booksCollection.updateOne(query, book, options)
             res.send(result);
+      })
+
+         // Update Book
+        app.put('/books/:id', async (req, res) => {
+          const id = req.params.id
+          const query = { _id: new ObjectId(id) }
+          const options = { upsert: true }
+          const updatedBook = req.body
+          const book = {
+            $set: {
+              quantity: updatedBook.quantity,
+            }
+          }
+            const result = await booksCollection.updateOne(query, book, options)
+            res.send(result);
       console.log(result)
       })
 
@@ -108,14 +123,6 @@ async function run() {
         const result = await cursor.toArray()
         res.send(result)
       })
-
-
-    // app.post("/add-book", (req, res) => {
-    //   const book = req.body;
-    //   books.push(book); // Store book data
-    //   console.log("New book received:", book);
-    //   res.status(201).json({ message: "Book added successfully", book });
-    // });
 
 
     app.get('/user', async (req, res) => {
